@@ -1,14 +1,33 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
+import { FirebaseContext } from '../../store/Context';
+import { Link, useNavigate } from 'react-router-dom';
 
 import Logo from '../../olx-logo.png';
 import './Login.css';
 
 function Login() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const { firebase } = useContext(FirebaseContext)
+  const navigate = useNavigate();
+
+  const handleForm = (e) => {
+    e.preventDefault();
+    firebase.auth().signInWithEmailAndPassword(email, password)
+      .then(() => {
+        navigate('/')
+      }).catch((error) => {
+        alert(error.message)
+      })
+  }
+
   return (
     <div>
       <div className="loginParentDiv">
         <img width="200px" height="200px" src={Logo}></img>
-        <form>
+        <form
+          onSubmit={handleForm}
+        >
           <label htmlFor="fname">Email</label>
           <br />
           <input
@@ -16,7 +35,8 @@ function Login() {
             type="email"
             id="fname"
             name="email"
-            defaultValue="John"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <br />
           <label htmlFor="lname">Password</label>
@@ -26,7 +46,8 @@ function Login() {
             type="password"
             id="lname"
             name="password"
-            defaultValue="Doe"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
           <br />
           <br />
