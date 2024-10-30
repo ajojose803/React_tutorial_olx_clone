@@ -25,7 +25,7 @@ function Header() {
           <Arrow></Arrow>
         </div>
         <div className="productSearch">
-          <div className="input">
+          <div className="input"> 
             <input
               type="text"
               placeholder="Find car,mobile phone and more..."
@@ -49,13 +49,13 @@ function Header() {
           navigate('/login')
         }}>Logout</span>}
 
-        <Link to={'/create'} className="sellMenu">
+        {user && <Link to={'/create'} className="sellMenu">
           <SellButton></SellButton>
           <div className="sellMenuContent">
             <SellButtonPlus></SellButtonPlus>
             <span>SELL</span>
           </div>
-        </Link>
+        </Link>}
       </div >
     </div >
   );
